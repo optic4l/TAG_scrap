@@ -4,6 +4,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
+import requests
 
 PATENTE = "jt0789"
 
@@ -26,11 +27,26 @@ def main():
 
     response = driver.find_element(By.XPATH, '/html/body/div/div/div[2]/div[1]/div/span').text
 
-    print('no registra deuda' in response.lower())
+    if('no registra deuda' in response.lower()):
+        telegram_message(f'El vehiculo con patente {PATENTE} no registra deuda')
+    else:
+        telegram_message(f'El vehiculo con patente {PATENTE} registra deuda')
     
 
     time.sleep(2)  # Wait for the page to load
     driver.quit()  # Close the browser after use
+
+def telegram_message(message: str):
+    token = "8290072122:AAGDTtMKK1cYy_CS2WqT4XX4iky1j9OI5Is"
+    chat_id = "1649705791"
+    url = f"https://api.telegram.org/bot{token}/sendMessage"
+    data = {
+        "chat_id": chat_id,
+        "text": message
+    }
+
+    requests.post(url, data=data)
+    print("Mensaje enviado a Telegram")
 
 if __name__ == "__main__":
     main()
