@@ -1,5 +1,18 @@
+# Python
+*.pyc
+*.pyo
+*.pyd
+*.pdb
 ./venv/
 /venv/
 venv/
 __pycache__/
+backend/__pycache__/
 .env
+example.db
+
+# frontend
+frontend/node_modules/
+
+frontend/dist/
+frontend/.env
